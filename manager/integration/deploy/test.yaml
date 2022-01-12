@@ -61,7 +61,7 @@ metadata:
 spec:
   containers:
   - name: longhorn-test
-    image: longhornio/longhorn-manager-test:master-head
+    image: thehejik/longhorn-manager-test:v1.3.0-s390x
 #    args: [
 #           "-x", "-s",
 #           "-m", "coretest",
