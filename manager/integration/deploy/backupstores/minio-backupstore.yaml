@@ -46,8 +46,8 @@ spec:
 
   containers:
   - name: minio
-    image: minio/minio:RELEASE.2022-02-01T18-00-14Z
-    command: ["sh", "-c", "mkdir -p /storage/backupbucket && mkdir -p /root/.minio/certs && ln -s /root/certs/private.key /root/.minio/certs/private.key && ln -s /root/certs/public.crt /root/.minio/certs/public.crt && exec minio server /storage"]
+    image: thehejik/minio:RELEASE.2022-01-08T03-11-54Z
+    command: ["sh", "-c", "mkdir -p /storage/backupbucket && mkdir -p /root/.minio/certs && ln -s /root/certs/private.key /root/.minio/certs/private.key && ln -s /root/certs/public.crt /root/.minio/certs/public.crt && exec /usr/bin/minio server /storage --console-address :9090"]
     env:
     - name: MINIO_ROOT_USER
       valueFrom:
@@ -59,8 +59,11 @@ spec:
         secretKeyRef:
           name: minio-secret
           key: AWS_SECRET_ACCESS_KEY
+    - name: MINIO_SITE_REGION
+      value: "us-east-1"
     ports:
     - containerPort: 9000
+    - containerPort: 9090
     volumeMounts:
     - name: minio-volume
       mountPath: "/storage"
@@ -81,3 +84,44 @@ spec:
       targetPort: 9000
       protocol: TCP
   sessionAffinity: ClientIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-console
+  namespace: default
+spec:
+  selector:
+    app: longhorn-test-minio
+  ports:
+  - port: 9090
+    targetPort: 9090
+    protocol: TCP
+  sessionAffinity: ClientIP
+#---
+## TODO: Ingress for minio-console (minio WebUI) - tls & hostname
+## Ingress is not working for some reason with minio-console, it's probably TLS related.
+## Also not sure if hostname wildcards are actually working as expected.
+## Anyway for the test itself it's not needed but it might be helpful for debugging purposes.
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: minio-console
+#  namespace: default
+#  annotations:
+#    nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+#spec:
+#  tls:
+#  - hosts:
+#    - '*.nip.io'
+#  rules:
+#  - host: '*.nip.io'
+#    http:
+#      paths:
+#      - backend:
+#          service:
+#            name: minio-console
+#            port:
+#              number: 9090
+#        path: /
+#        pathType: Prefix
