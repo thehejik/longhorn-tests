@@ -60,14 +60,18 @@ metadata:
     longhorn-test: test-job
 spec:
   containers:
-  - name: longhorn-test
-    image: longhornio/longhorn-manager-test:master-head
-#    args: [
+  - name: longhorn-test-pod
+    image: thehejik/longhorn-manager-test:master-bb41e033-s390x
+#   command: ["/bin/sh"]
+#   args: [
+#     "-c", "sleep inf", ]
+    args: [
+      "-s", "-m", "coretest",
 #           "-x", "-s",
 #           "-m", "coretest",
 #           "-k", "test_recurring_job",
 #           "--skip-recurring-job-test",
-#           ]
+           ]
     #TEST_FRAMEWORK_ARGS_PLACEHOLDER
     imagePullPolicy: Always
     securityContext:
