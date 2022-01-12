@@ -65,8 +65,8 @@ RETRY_EXEC_INTERVAL = 5
 
 LONGHORN_NAMESPACE = "longhorn-system"
 
-COMPATIBILTY_TEST_IMAGE_PREFIX = "longhornio/longhorn-test:version-test"
-UPGRADE_TEST_IMAGE_PREFIX = "longhornio/longhorn-test:upgrade-test"
+COMPATIBILTY_TEST_IMAGE_PREFIX = "thehejik/longhorn-test:version-test"
+UPGRADE_TEST_IMAGE_PREFIX = "thehejik/longhorn-test:upgrade-test"
 
 ISCSI_DEV_PATH = "/dev/disk/by-path"
 

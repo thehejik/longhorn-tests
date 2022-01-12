@@ -1,6 +1,6 @@
 FROM registry.suse.com/bci/python:3.9
 
-ARG KUBECTL_VERSION=v1.17.0
+ARG KUBECTL_VERSION=v1.21.6
 ARG ARCH=amd64
 
 RUN zypper ref -f
