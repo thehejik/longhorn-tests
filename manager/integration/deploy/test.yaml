@@ -62,12 +62,13 @@ spec:
   containers:
   - name: longhorn-test-pod
     image: thehejik/longhorn-manager-test:v1.2.x-head
-#    args: [
+    args: [
+      "-s", "-m", "coretest", "--junit-xml=/tmp/results.xml",
 #           "-x", "-s",
 #           "-m", "coretest",
 #           "-k", "test_recurring_job",
 #           "--skip-recurring-job-test",
-#           ]
+           ]
     #TEST_FRAMEWORK_ARGS_PLACEHOLDER
     imagePullPolicy: Always
     securityContext:
