@@ -25,7 +25,7 @@ echo "Building for ${ARCH}"
 BASE_IMAGE=`grep FROM Dockerfile | awk '{print $2}'`
 docker pull ${BASE_IMAGE}
 
-docker build --build-arg ARCH=${ARCH} -t ${image} .
+docker build --no-cache --build-arg ARCH=${ARCH} -t ${image} .
 mkdir -p bin
 echo ${image} > bin/latest_image
 echo Built image ${image}
