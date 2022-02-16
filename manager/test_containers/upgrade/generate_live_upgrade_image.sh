@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # make sure IMAGE wasn't used by any releases
-IMAGE="raulcabm/longhorn-engine:live-upgrade-5-3-1"
+# It is retagged official longhorn-engine image with newer longhorn bin version then the installed one
+# Raul was doing a new commit in longhorn-engine repo and a new git tag rc6
+# So in the end "rancherlabs/longhornonz-longhorn-engine:v1.2.3-rc6-s390x" was retagged as $IMAGE value
+# Deployed version under test was "rancherlabs/longhornonz-longhorn-engine:v1.2.3-rc3-s390x"
+IMAGE="thehejik/longhorn-engine:live-upgrade-5-3-1"
 
 version=`docker run $IMAGE longhorn version --client-only`
 echo Image version output: $version
